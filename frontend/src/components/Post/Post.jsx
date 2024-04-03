@@ -2,6 +2,7 @@ import React from "react";
 // import Like from "./Like";
 import CreateComment from "../Comment/CreateComment";
 import Comment from "../Comment/Comments";
+import Like from "../Like/Like"
 import "./Post.css"
 
 const Post = (props) => {
@@ -13,6 +14,7 @@ const Post = (props) => {
         <p className="post-user-fullName">{props.post.user?.fullName}</p>
         <p className="post-date">{props.post.createdAt}</p>
       </div>
+      <Like />
       <div className="post-message">
         <p>{props.post.message}</p>
       </div>
