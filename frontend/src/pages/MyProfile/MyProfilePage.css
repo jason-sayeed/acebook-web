@@ -1,0 +1,40 @@
+/* Background banner */
+.banner{
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Adjust as needed */
+    width: 100%;
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/005/720/479/small/banner-abstract-background-board-for-text-and-message-design-modern-free-vector.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Image box */
+.imgBox {
+    position: relative;
+    flex: 1;
+    width: 100%;
+}
+
+.imgBox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text overlay */
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+/* Content box */
+.contentBox {
+    padding: 20px;
+    background-color: white;
+}

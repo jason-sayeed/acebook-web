@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import getUser from "../../services/user";
+import "./userDetails.css";
 
 const UserDetails = () => {
   const [userData, setUserData] = useState({});
@@ -23,12 +24,14 @@ const UserDetails = () => {
 
   return (
     <>
-      <div>
-        <h1>User Details</h1>
-        <div className="fullName">{userData.fullName}</div>
-        <img className="profile_pic" src={userData.profilePicture} />
-        <div className="email">{userData.email}</div>
+      <div className="user-details-container">
+        <h1>Profile Details</h1>
+          <div className="user-info">
+          <img className="profile_pic" src={userData.profilePicture} alt="Profile" />
+          <div className="user-name">{userData.fullName}</div>
       </div>
+</div>
+
     </>
   );
 };

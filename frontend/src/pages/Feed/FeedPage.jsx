@@ -4,7 +4,6 @@ import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/Post/CreatePost";
 import Navbar from "../../components/NavBar/Navbar";
-import UserDetails from "../../components/User/UserDetails";
 import "./FeedPage.css";
 
 export const FeedPage = () => {
@@ -37,7 +36,6 @@ export const FeedPage = () => {
   return (
     <>
       <Navbar />
-      <UserDetails />
       <div className="feed-page">
         {/* <h1>Hello {fullName}</h1> */}
         <h2>Your feed</h2>
