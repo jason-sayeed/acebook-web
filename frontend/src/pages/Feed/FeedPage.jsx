@@ -31,7 +31,7 @@ export const FeedPage = () => {
    useEffect(() => { //added
      fetchPosts(); // Fetch posts when component mounts 
       //fetch posts every 10 seconds 
-     const interval = setInterval(fetchPosts, 10000); 
+     const interval = setInterval(fetchPosts, 5000); 
      return () => clearInterval(interval); // Cleanup interval on component unmount 
    }, [navigate]); // dont know how this works
    const token = localStorage.getItem("token"); 
