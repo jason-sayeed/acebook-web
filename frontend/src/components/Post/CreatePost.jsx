@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createNewPost } from "../../services/posts";
+import "./CreatePost.css";
 
 const CreatePost = () => {
   const [newPost, setNewPost] = useState("");
@@ -40,15 +41,34 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
-      <input
+    <div className="create-post-container">
+      <input className="post-input"
         type="text"
         value={newPost}
         onChange={handlePostChange}
-        placeholder="Type your post message here"
+        placeholder="Type your post message here..."
       />
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      <button onClick={handleSubmit}>Create Post</button>
+      
+
+      <div className="buttons-container">
+        <label className="image-button" htmlFor="fileInput">
+          Add image
+        </label>
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
+        />
+
+        <div className="create-post">
+          <button onClick={handleSubmit}>Post</button>
+        </div>
+
+      </div>
+    
+
     </div>
   );
 };

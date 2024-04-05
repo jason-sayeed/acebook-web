@@ -37,7 +37,6 @@ export const FeedPage = () => {
   return (
     <>
       <Navbar />
-      <UserDetails />
       <div className="feed-page">
         {/* <h1>Hello {fullName}</h1> */}
         <h2>Your feed</h2>

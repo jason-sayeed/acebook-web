@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getComments } from "../../services/comments";
 import { likeComment } from "../../services/like";
+import "./Comments.css";
 
 const LikeButton = ({ commentId, userId, isLiked, updateComment }) => {
   const [liked, setLiked] = useState(isLiked);
@@ -54,40 +55,47 @@ const Comment = ({ postId, userId }) => {
   };
 
   return (
-    <div>
-      <h1>Comments</h1>
-      {commentData.map((comment) => {
-        const date = new Date(comment.createdAt);
-        const day = addOrdinalSuffix(date.getDate());
-        const month = date.toLocaleString("en-GB", { month: "short" });
-        const time = date.toLocaleString("en-GB", {
-          hour: "numeric",
-          minute: "numeric",
-        });
+  <div>
+    {commentData.map((comment) => {
+      const date = new Date(comment.createdAt);
+      const day = addOrdinalSuffix(date.getDate());
+      const month = date.toLocaleString("en-GB", { month: "short" });
+      const time = date.toLocaleString("en-GB", {
+        hour: "numeric",
+        minute: "numeric",
+      });
 
-        const formattedDate = `${day} ${month} ${date.getFullYear()} at ${time}`;
+      const formattedDate = `${day} ${month} ${date.getFullYear()} at ${time}`;
 
-        return (
-          <div className="comment" key={comment._id}>
-            <p className="comment-fullName">{comment.user.fullName}</p>
+      return (
+        <div className="comment-container" key={comment._id}>
+          <div className="header-container">
             <img
               className="comment-profilePicture"
               src={comment.user.profilePicture}
             />
-            <p className="comment-date">{formattedDate}</p>
-            <p className="comment-text">{comment.comment_text}</p>
-            <p className="like-count">{comment.likedBy.length}</p>
-            <LikeButton
+            <div className="comment-fullName">{comment.user.fullName}</div>
+            {/* <div className="comment-date">{formattedDate}</div> */}
+          </div>
+
+          
+          <div className="message">{comment.comment_text}</div>
+
+          <div className="like-and-count_container">
+            <div className="comment-like-count">{comment.likedBy.length}</div>
+            <div className="comment-like-button"><LikeButton
               commentId={comment._id}
               userId={userId}
               isLiked={comment.liked}
               updateComment={updateComment}
-            />
+            /> </div>
           </div>
-        );
-      })}
-    </div>
-  );
-};
+          
+        </div>
+      );
+    })}
+  </div>
+);
+  }
 
-export default Comment;
+  export default Comment;
