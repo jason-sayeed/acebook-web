@@ -32,7 +32,7 @@ export const FeedPage = () => {
 
    useEffect(() => { //added
      fetchPosts(); // Fetch posts when component mounts 
-      //fetch posts every 5 seconds 
+      //fetch posts every 2 seconds 
      const interval = setInterval(fetchPosts, 2000); 
      return () => clearInterval(interval); // Cleanup interval on component unmount 
    }, [navigate]); // dont know how this works
