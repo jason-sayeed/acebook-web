@@ -32,6 +32,12 @@
   
 }
 
+.navbar__right a:hover {
+  color: #ffffff; /* Change text color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Change background color on hover */
+  border-color: #fff; /* Change border color on hover */
+}
+
 .navbar__right a {
   padding: 50 px;
   font-size: 20px;
