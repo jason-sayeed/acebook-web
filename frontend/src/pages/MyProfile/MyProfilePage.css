@@ -22,5 +22,4 @@
 
 .text-overlay, .contentBox {
     position: relative;
-    z-index: 2; /* Ensures these elements are above the ::before pseudo-element */
-}
+    z-index: 2;
