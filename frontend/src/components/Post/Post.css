@@ -12,10 +12,9 @@
 .post-header-container {
   display: flex;
   border-radius: 10px;
-  margin-bottom: 25px; 
+  margin-bottom: 25px;
   background-color: #ededed;
   width: 100%; /* Set the width to 100% */
-  
 }
 
 .post-profile_picture {
@@ -25,12 +24,9 @@
   margin-left: 20px; /* Add margin between image and text */
   margin-top: 5px;
   margin-bottom: 5px;
-  
 }
 
 .post_image {
-  width: 500px; /* Adjust size as needed */
-  height: 350px; /* Adjust size as needed */
   outline: 2px solid #eceaea; /* Add outline */
   margin-left: 20px; /* Add margin between image and text */
   margin-top: 10px;
@@ -52,7 +48,7 @@
   color: #000000;
   margin-bottom: 5px;
   margin-top: 22px;
-  margin-left: 150px;
+  margin-left: 30px;
 }
 
 .post-message {
@@ -69,14 +65,13 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  
-}
-
-
-.post-like-button{
-  margin-left: 500px;
 }
 
 .post-like-counter {
-  margin-right: 30px;
+  margin-right: 10px;
+}
+
+.post-like-button {
+  margin-bottom: 15px;
+  margin-left: 1px;
 }

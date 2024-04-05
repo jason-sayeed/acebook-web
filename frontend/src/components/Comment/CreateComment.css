@@ -1,21 +1,18 @@
 .create-comment-container {
-    display: flex;
-    flex-direction: column;
-
-
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-input {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    border: 1px solid #bbbaba;
-    border-radius: 8px;
-    font: Helvetica;
-    padding: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  border: 1px solid #bbbaba;
+  border-radius: 8px;
+  font: Helvetica;
+  padding: 20px;
 }
 
 .create_comment_button {
-    margin-left: 500px;
-
+  margin-left: 700px;
 }

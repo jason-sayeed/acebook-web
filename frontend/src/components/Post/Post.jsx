@@ -40,45 +40,48 @@ const Post = ({ post, userId }) => {
     if (day === 3 || day === 23) return day + "rd";
     return day + "th";
   };
-  
+
   const date = new Date(post.createdAt);
   const day = addOrdinalSuffix(date.getDate());
   const month = date.toLocaleString("en-GB", { month: "short" });
-  const time = date.toLocaleString("en-GB", { hour: "numeric", minute: "numeric" });
-  
+  const time = date.toLocaleString("en-GB", {
+    hour: "numeric",
+    minute: "numeric",
+  });
+
   const formattedDate = `${day} ${month} ${date.getFullYear()} at ${time}`;
-  
+
   return (
-    
-      <article className="post" key={post._id}>
-        <div className="post-header-container">
-          <img
-            className="post-profile_picture"
-            src={post.user ? post.user.profilePicture : ""}
-            alt="Profile"
+    <article className="post" key={post._id}>
+      <div className="post-header-container">
+        <img
+          className="post-profile_picture"
+          src={post.user ? post.user.profilePicture : ""}
+          alt="Profile"
+        />
+        <p className="post-user-fullName">
+          {post.user ? post.user.fullName : ""}
+        </p>
+        <p className="post-date">{formattedDate}</p>
+      </div>
+      <div className="post-message">
+        <p>{post.message}</p>
+        {post.image && (
+          <img className="postgit_image" src={post.image} alt="Post" />
+        )}
+      </div>
+
+      <div className="like-and-count_container">
+        <div className="post-like-counter">{post.likedBy.length}</div>
+        <div className="post-like-button">
+          <LikeButton
+            postId={post._id}
+            userId={userId}
+            isLiked={liked}
+            updatePost={updatePost}
           />
-          <p className="post-user-fullName">{post.user ? post.user.fullName : ""}</p>
-          <p className="post-date">{formattedDate}</p>
         </div>
-        <div className="post-message">
-          <p>{post.message}</p>
-          {post.image && <img className="postgit_image" src={post.image} alt="Post" />}
-        </div>
-        
-        
-      
-        <div className="like-and-count_container">
-          <div className="post-like-button">
-          <div className="post-like-counter">{post.likedBy.length}</div>
-            <LikeButton
-              postId={post._id}
-              userId={userId}
-              isLiked={liked}
-              updatePost={updatePost}
-            />
-          </div>
-          
-        </div>
+      </div>
       <div className="comments">
         <Comment postId={post._id} token={token} />
       </div>
