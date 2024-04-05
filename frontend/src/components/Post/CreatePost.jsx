@@ -28,17 +28,35 @@ const CreatePost = () => {
       message: newPost,
       image: postImage,
     };
-
-    createNewPost(token, postData)
-      .then(() => {
-        console.log("Post created successfully");
-        setNewPost("");
-        setPostImage("");
-      })
-      .catch((error) => {
-        console.error("Error creating post:", error);
-      });
+    //new code starts here
+    if (newPost.trim() !== "" || postImage) {
+      createNewPost(token, postData)
+        .then(() => {
+          console.log("Post created successfully");
+          setNewPost("");
+          setPostImage("");
+        })
+        .catch((error) => {
+          console.error("Error creating post:", error);
+        });
+    } else {
+      console.log("Cannot submit empty post");
+    }
   };
+    //new code ends here
+
+//original code below
+    //createNewPost(token, postData)
+      //.then(() => {
+        //console.log("Post created successfully");
+        //setNewPost("");
+        //setPostImage("");
+     // })
+      //.catch((error) => {
+        //console.error("Error creating post:", error);
+      //});
+  //};
+  // original code above
 
   return (
     <div className="create-post-container">
