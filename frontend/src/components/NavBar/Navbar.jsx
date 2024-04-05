@@ -1,30 +1,57 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import getUser from "../../services/user";
 
 const Navbar = () => {
-  const logout = () => {
-    return localStorage.removeItem("token");
-  };
+    const logout = () => {
+        return localStorage.removeItem("token");
+    };
 
-  const handleClick = () => {
-    logout();
-  };
+    const handleClick = () => {
+        logout();
+    };
 
-  return (
-    <header>
-      <div className="menu_container">
-        <Link to="/posts">
-          <h1>Home</h1>
-        </Link>
-        <Link to="/profile">
-          <h1>My profile</h1>
-        </Link>
-        <Link to="/login" onClick={handleClick}>
-          <h1>Logout</h1>
-        </Link>
-      </div>
-    </header>
-  );
+    const [userData, setUserData] = useState({});
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+        getUser(token)
+            .then((data) => {
+            setUserData(data);
+            })
+            .catch((err) => {
+            console.error(err);
+            navigate("/login");
+            });
+        }
+    }, [navigate]);
+
+    return (
+            <nav className="navbar">
+            <div className="navbar__left">
+                <img className="navbar_profile_pic" src={userData.profilePicture} />
+            </div>
+            <div className="navbar__right">
+                <Link to="/posts">
+                Home
+                </Link>
+                <Link>
+                My profile
+                </Link>
+                <Link to="/login" onClick={handleClick}>
+                Logout
+                </Link>
+            </div>
+            </nav>
+        );
 };
 
 export default Navbar;
+
+
+

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { likePost } from "../../services/like";
+import "./Like.css";
 
 const LikeButton = ({ postId, userId, isLiked, updatePost }) => {
     const [liked, setLiked] = useState(isLiked);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createNewComment } from "../../services/comments";
+import "./CreateComment.css";
 
 const CreateComment = ({ postId }) => {
   const [newComment, setNewComment] = useState("");
@@ -26,15 +27,16 @@ const CreateComment = ({ postId }) => {
   };
 
   return (
-    <div>
-      <input
+    <div className="create-comment-container">
+      <input className="comment-input"
         type="text"
         value={newComment}
         onChange={handleChange}
         placeholder="Type your comment here"
       />
-
-      <button onClick={handleSubmit}>Create Comment</button>
+      <div className="create_comment_button">
+        <button onClick={handleSubmit}>Create Comment</button>
+      </div>
     </div>
   );
 };

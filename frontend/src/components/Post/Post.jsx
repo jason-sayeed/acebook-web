@@ -64,16 +64,21 @@ const Post = ({ post, userId }) => {
           <p>{post.message}</p>
           {post.image && <img className="postgit_image" src={post.image} alt="Post" />}
         </div>
-        <p className="like-counter">{post.likedBy.length}</p>
-        {/* Rest of your component */}
+        
+        
       
-    
-      <LikeButton
-        postId={post._id}
-        userId={userId}
-        isLiked={liked}
-        updatePost={updatePost}
-      />
+        <div className="like-and-count_container">
+          <div className="post-like-button">
+          <div className="post-like-counter">{post.likedBy.length}</div>
+            <LikeButton
+              postId={post._id}
+              userId={userId}
+              isLiked={liked}
+              updatePost={updatePost}
+            />
+          </div>
+          
+        </div>
       <div className="comments">
         <Comment postId={post._id} token={token} />
       </div>

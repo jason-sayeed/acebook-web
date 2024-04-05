@@ -1,18 +1,25 @@
-.menu_container {
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
-  width: calc(100% - 10px);
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: space-between; /* Add this to push the profile picture to the left and links to the right */
+  align-items: center; /* Center vertically */
   padding: 5px;
-  border-bottom: 0.5px solid #000;
-  background-color: #fff;
+  background-color: #1b83a4;
   z-index: 999;
+  
 }
 
-.menu_container a {
+/* Left section */
+.navbar__left {
+  display: flex;
+  align-items: left;
+}
+
+/* Right section */
+.navbar__right {
   color: #333;
   text-decoration: none;
   font-size: 5px;
@@ -20,6 +27,37 @@
   border-radius: 2.5px;
   border: 0.5px solid transparent;
   transition: all 0.3s ease;
+  display: flex;
+
+  
 }
+
+.navbar__right a:hover {
+  color: #ffffff; /* Change text color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Change background color on hover */
+  border-color: #fff; /* Change border color on hover */
+}
+
+.navbar__right a {
+  padding: 50 px;
+  font-size: 20px;
+  margin-right: 25px;
+  color: #ffffff; 
+}
+
+/* Individual navbar items */
+.navbar__item {
+  margin-right: 20px;
+}
+
+.navbar_profile_pic {
+  width: 45px; /* Adjust size as needed */
+  height: 45px; /* Adjust size as needed */
+  border-radius: 50%;
+  
+  margin-left: 0px; /* Add margin between image and text */
+  margin-top: 10px;
+}
+
 
 
