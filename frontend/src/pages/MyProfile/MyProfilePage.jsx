@@ -1,6 +1,7 @@
 
 import Navbar from "../../components/NavBar/Navbar";
 import UserDetails from "../../components/User/UserDetails";
+import PasswordUpdateForm from "../../components/User/PasswordUpdate";
 import "./MyProfilePage.css";
 
 export const MyProfilePage = () => {
@@ -16,6 +17,8 @@ export const MyProfilePage = () => {
                 </div>
                 <div className="contentBox">
                     <UserDetails />
+                    <br></br>
+                    <PasswordUpdateForm />
                 </div>
             </div>
         </>
