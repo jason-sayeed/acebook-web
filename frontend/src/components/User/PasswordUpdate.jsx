@@ -1,3 +1,5 @@
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +18,7 @@ const token = localStorage.getItem("token");
     }
 
     try {
-    const response = await fetch('http://localhost:3000/users/updatePassword', {
+    const response = await fetch('${BACKEND_URL}/users/updatePassword', {
         method: 'PATCH',
         headers: {
         'Content-Type': 'application/json',
