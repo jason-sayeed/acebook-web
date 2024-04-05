@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link to="/posts">
           <h1>Home</h1>
         </Link>
-        <Link>
+        <Link to="/profile">
           <h1>My profile</h1>
         </Link>
         <Link to="/login" onClick={handleClick}>

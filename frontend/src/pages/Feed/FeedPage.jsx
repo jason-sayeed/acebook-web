@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // added
+import React, { useState, useEffect } from "react"; // added 
 import { useNavigate } from "react-router-dom";
 import { getPosts } from "../../services/posts";
 //import { likePost } from "../../services/like"; //added import
@@ -59,7 +59,6 @@ export const FeedPage = () => {
   return (
     <>
       <Navbar />
-      <UserDetails />
       <div className="feed-page">
         <h2>Your feed</h2>
         <div className="createpost" role="feed">
