@@ -47,4 +47,25 @@ const UsersController = {
   getProfile: getProfile,
 };
 
+const updatePassword = async (req, res) => {
+  const userId = req.user_id; 
+  const { newPassword } = req.body;
+  if (!newPassword) {
+    return res.status(400).json({ message: "New password is required" });
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, { password : newPassword }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+UsersController.updatePassword = updatePassword;
+
+
 module.exports = UsersController;

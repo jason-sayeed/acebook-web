@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get("/", tokenChecker, UsersController.getProfile);
 router.post("/", UsersController.create);
+router.patch("/updatePassword", tokenChecker, UsersController.updatePassword);
 
 module.exports = router;
