@@ -84,7 +84,3 @@ export const FeedPage = () => {
     </>
   );
 };
-
-
-
-
