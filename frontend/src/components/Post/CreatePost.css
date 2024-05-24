@@ -1,0 +1,35 @@
+.create-post-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 50px;
+}
+
+.post-input {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  border: 1px solid #bbbaba;
+  border-radius: 8px;
+  font: Helvetica;
+  padding: 20px;
+}
+
+.create-post {
+  float: right;
+}
+
+.image-button {
+  border: 1px solid #818181;
+  border-radius: 4px;
+  font-size: 13px;
+  padding: 2px;
+  margin-bottom: 10px;
+  margin-right: 30px;
+  transition: background-color 0.3s; /* Add transition for smooth effect */
+  background-color: #eaeaea;
+  float: right;
+}
+
+.image-button:hover {
+  background-color: #ffffff;
+}

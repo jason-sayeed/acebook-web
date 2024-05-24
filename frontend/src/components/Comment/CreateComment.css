@@ -1,0 +1,20 @@
+.create-comment-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-input {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #bbbaba;
+  border-radius: 8px;
+  font: Helvetica;
+  padding: 20px;
+}
+
+.create_comment_button {
+  margin-left: auto;
+  margin-bottom: 30px;
+}

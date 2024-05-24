@@ -1,0 +1,27 @@
+.like {
+  padding: 8px 16px;
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.like:hover {
+  background-color: #23527c;
+}
+
+.unlike {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.unlike:hover {
+  background-color: #c9302c;
+}

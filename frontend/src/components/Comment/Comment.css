@@ -1,0 +1,58 @@
+.comment-container {
+  width: 50%;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+}
+
+.comment-content {
+  width: 100%;
+}
+
+.comment-user {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #ededed;
+}
+
+.comment-profilePicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.comment-fullName {
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.comment-date {
+  font-size: 14px;
+  color: #000000;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.comment-text {
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 20px;
+  font: Helvetica;
+  word-wrap: break-word;
+}
+
+.comment-like-button {
+  float: right;
+}
+
+.comment-like-count {
+  float: right;
+  margin-right: 10px;
+}
