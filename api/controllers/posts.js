@@ -37,6 +37,28 @@ const createPost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+
+    if (!postId) {
+      return res.status(400).json({ message: "Post ID not provided" });
+    }
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    await post.deleteOne();
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const likePost = async (req, res) => {
   console.log("liked request reaching backend");
@@ -90,6 +112,7 @@ const likePost = async (req, res) => {
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
+  deletePost: deletePost,
   likePost: likePost,
 };
 

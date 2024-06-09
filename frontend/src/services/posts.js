@@ -38,3 +38,23 @@ export const createNewPost = async (token, postData) => {
   const data = await response.json();
   return data;
 };
+
+export const deletePost = async (token, postId) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(
+    `${BACKEND_URL}/posts/${postId}`,
+    requestOptions
+  );
+
+  if (response.status !== 200) {
+    throw new Error("Unable to delete post");
+  }
+  return { message: "Post deleted successfully" };
+};

@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { LikePostButton } from "../Like/Like";
+import DeletePostButton from "./DeletePost";
 import Comments from "../Comment/Comments";
 import "./Post.css";
 
@@ -52,6 +53,9 @@ const Post = ({ posts, loggedInUser, fetchPosts }) => {
                 />
               </div>
               <div className="post-like-counter">{post.likedBy.length}</div>
+            </div>
+            <div className="post-delete">
+              <DeletePostButton postId={post._id} fetchPosts={fetchPosts} />
             </div>
             <div>
               <Comments postId={post._id} />
