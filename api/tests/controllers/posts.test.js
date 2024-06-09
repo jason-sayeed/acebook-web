@@ -5,6 +5,8 @@ const app = require("../../app");
 const Post = require("../../models/post");
 const User = require("../../models/user");
 
+const { deletePost } = require("../../controllers/posts");
+
 require("../mongodb_helper");
 
 const secret = process.env.JWT_SECRET;
@@ -25,189 +27,272 @@ const createToken = (userId) => {
 let token;
 describe("/posts", () => {
   beforeAll(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
+
     const user = new User({
       email: "post-test@test.com",
       password: "12345678",
+      profilePicture: "default.jpg",
+      fullName: "Test User",
     });
     await user.save();
-    await Post.deleteMany({});
+
     token = createToken(user.id);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await User.deleteMany({});
     await Post.deleteMany({});
   });
 
-  // describe("POST, when a valid token is present", () => {
-  //   test("responds with a 201", async () => {
-  //     const response = await request(app)
-  //       .post("/posts")
-  //       .set("Authorization", `Bearer ${token}`)
-  //       .send({ message: "Hello World!" });
-  //     expect(response.status).toEqual(201);
-  //   });
+  afterEach(async () => {
+    await Post.deleteMany({});
+  });
 
-  //   test("creates a new post", async () => {
-      // await request(app)
-      //   .post("/posts")
-      //   .set("Authorization", `Bearer ${token}`)
-      //   .send({ message: "Hello World!!" });
+  describe("POST, when a valid token is present", () => {
+    test("responds with a 201", async () => {
+      const response = await request(app)
+        .post("/posts")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "Hello World!" });
+      expect(response.status).toEqual(201);
+    });
+  });
 
-  //     const posts = await Post.find();
-  //     expect(posts.length).toEqual(1);
-  //     expect(posts[0].message).toEqual("Hello World!!");
-  //   });
+  test("creates a new post", async () => {
+    await request(app)
+      .post("/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ message: "Hello World!!" });
 
-  //   test("returns a new token", async () => {
-  //     const testApp = request(app);
-  //     const response = await testApp
-  //       .post("/posts")
-  //       .set("Authorization", `Bearer ${token}`)
-  //       .send({ message: "hello world" });
+    const posts = await Post.find();
+    expect(posts.length).toEqual(1);
+    expect(posts[0].message).toEqual("Hello World!!");
+  });
 
-  //     const newToken = response.body.token;
-  //     const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
-  //     const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
+  test("returns a new token", async () => {
+    const testApp = request(app);
+    const response = await testApp
+      .post("/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send({ message: "hello world" });
 
-  //     // iat stands for issued at
-  //     expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
-  //   });
-  // });
+    const newToken = response.body.token;
+    const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
+    const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
 
-  // describe("POST, when token is missing", () => {
-  //   test("responds with a 401", async () => {
-  //     const response = await request(app)
-  //       .post("/posts")
-  //       .send({ message: "hello again world" });
+    // iat stands for issued at
+    expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+  });
+});
 
-  //     expect(response.status).toEqual(401);
-  //   });
+describe("POST, when token is missing", () => {
+  test("responds with a 401", async () => {
+    const response = await request(app)
+      .post("/posts")
+      .send({ message: "hello again world" });
 
-  //   test("a post is not created", async () => {
-  //     const response = await request(app)
-  //       .post("/posts")
-  //       .send({ message: "hello again world" });
+    expect(response.status).toEqual(401);
+  });
 
-  //     const posts = await Post.find();
-  //     expect(posts.length).toEqual(0);
-  //   });
+  test("a post is not created", async () => {
+    const response = await request(app)
+      .post("/posts")
+      .send({ message: "hello again world" });
 
-  //   test("a token is not returned", async () => {
-  //     const response = await request(app)
-  //       .post("/posts")
-  //       .send({ message: "hello again world" });
+    const posts = await Post.find();
+    expect(posts.length).toEqual(0);
+  });
 
-  //     expect(response.body.token).toEqual(undefined);
-  //   });
-  // });
+  test("a token is not returned", async () => {
+    const response = await request(app)
+      .post("/posts")
+      .send({ message: "hello again world" });
 
-  // describe("GET, when token is present", () => {
-  //   test("the response code is 200", async () => {
-  //     const post1 = new Post({ message: "I love all my children equally" });
-  //     const post2 = new Post({ message: "I've never cared for GOB" });
-  //     await post1.save();
-  //     await post2.save();
+    expect(response.body.token).toEqual(undefined);
+  });
+});
 
-  //     const response = await request(app)
-  //       .get("/posts")
-  //       .set("Authorization", `Bearer ${token}`);
+describe("GET, when token is present", () => {
+  test("the response code is 200", async () => {
+    const post1 = new Post({ message: "I love all my children equally" });
+    const post2 = new Post({ message: "I've never cared for GOB" });
+    await post1.save();
+    await post2.save();
 
-  //     expect(response.status).toEqual(200);
-  //   });
+    const response = await request(app)
+      .get("/posts")
+      .set("Authorization", `Bearer ${token}`);
 
-  //   test("returns every post in the collection", async () => {
-  //     const post1 = new Post({ message: "howdy!" });
-  //     const post2 = new Post({ message: "hola!" });
-  //     await post1.save();
-  //     await post2.save();
+    expect(response.status).toEqual(200);
+  });
 
-  //     const response = await request(app)
-  //       .get("/posts")
-  //       .set("Authorization", `Bearer ${token}`);
+  test("returns every post in the collection", async () => {
+    const post1 = new Post({ message: "howdy!" });
+    const post2 = new Post({ message: "hola!" });
+    await post1.save();
+    await post2.save();
 
-  //     const posts = response.body.posts;
-  //     const firstPost = posts[0];
-  //     const secondPost = posts[1];
+    const response = await request(app)
+      .get("/posts")
+      .set("Authorization", `Bearer ${token}`);
 
-  //     expect(firstPost.message).toEqual("howdy!");
-  //     expect(secondPost.message).toEqual("hola!");
-  //   });
+    const posts = response.body.posts;
+    const firstPost = posts[0];
+    const secondPost = posts[1];
 
-  //   test("returns a new token", async () => {
-  //     const post1 = new Post({ message: "First Post!" });
-  //     const post2 = new Post({ message: "Second Post!" });
-  //     await post1.save();
-  //     await post2.save();
+    expect(firstPost.message).toEqual("howdy!");
+    expect(secondPost.message).toEqual("hola!");
+  });
 
-  //     const response = await request(app)
-  //       .get("/posts")
-  //       .set("Authorization", `Bearer ${token}`);
+  test("returns a new token", async () => {
+    const post1 = new Post({ message: "First Post!" });
+    const post2 = new Post({ message: "Second Post!" });
+    await post1.save();
+    await post2.save();
 
-  //     const newToken = response.body.token;
-  //     const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
-  //     const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
+    const response = await request(app)
+      .get("/posts")
+      .set("Authorization", `Bearer ${token}`);
 
-  //     // iat stands for issued at
-  //     expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
-  //   });
-  // });
+    const newToken = response.body.token;
+    const newTokenDecoded = JWT.decode(newToken, process.env.JWT_SECRET);
+    const oldTokenDecoded = JWT.decode(token, process.env.JWT_SECRET);
 
-  // describe("GET, when token is missing", () => {
-  //   test("the response code is 401", async () => {
-  //     const post1 = new Post({ message: "howdy!" });
-  //     const post2 = new Post({ message: "hola!" });
-  //     await post1.save();
-  //     await post2.save();
+    // iat stands for issued at
+    expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+  });
+});
 
-  //     const response = await request(app).get("/posts");
+describe("GET, when token is missing", () => {
+  test("the response code is 401", async () => {
+    const post1 = new Post({ message: "howdy!" });
+    const post2 = new Post({ message: "hola!" });
+    await post1.save();
+    await post2.save();
 
-  //     expect(response.status).toEqual(401);
-  //   });
+    const response = await request(app).get("/posts");
 
-  //   test("returns no posts", async () => {
-  //     const post1 = new Post({ message: "howdy!" });
-  //     const post2 = new Post({ message: "hola!" });
-  //     await post1.save();
-  //     await post2.save();
+    expect(response.status).toEqual(401);
+  });
 
-  //     const response = await request(app).get("/posts");
+  test("returns no posts", async () => {
+    const post1 = new Post({ message: "howdy!" });
+    const post2 = new Post({ message: "hola!" });
+    await post1.save();
+    await post2.save();
 
-  //     expect(response.body.posts).toEqual(undefined);
-  //   });
+    const response = await request(app).get("/posts");
 
-  //   test("does not return a new token", async () => {
-  //     const post1 = new Post({ message: "howdy!" });
-  //     const post2 = new Post({ message: "hola!" });
-  //     await post1.save();
-  //     await post2.save();
+    expect(response.body.posts).toEqual(undefined);
+  });
 
-  //     const response = await request(app).get("/posts");
+  test("does not return a new token", async () => {
+    const post1 = new Post({ message: "howdy!" });
+    const post2 = new Post({ message: "hola!" });
+    await post1.save();
+    await post2.save();
 
-  //     expect(response.body.token).toEqual(undefined);
-  //   });
-  // });
+    const response = await request(app).get("/posts");
 
-  describe("Post - creating new post linked with User", ( )=> {
-      test("When creating Post - pulls FullName from user.fullName", async () => {
-        const user1 = new User({email: "fake@email.com",
-        password: "Abc123",
-        fullName: "Test Name",
-        profilePicture: "awdawd"
-      });
-        await user1.save();
-        console.log(user1)
-        const post1 = new Post({message: "go away",
-        user: user1._id});
-        await post1.save();
-        const response = await request(app).get("/posts").set("Authorization", `Bearer ${token}`).send()
-        console.log("Response body:", response.body);
+    expect(response.body.token).toEqual(undefined);
+  });
+});
 
-          // Ensure that the response body contains an array of posts
-        console.log(response.body.posts[0].user.fullName)
-    
+describe("Post - creating new post linked with User", () => {
+  test("When creating Post - pulls FullName from user.fullName", async () => {
+    const user1 = new User({
+      email: "fake@email.com",
+      password: "Abc123",
+      fullName: "Test Name",
+      profilePicture: "awdawd",
+    });
+    await user1.save();
+    console.log(user1);
+    const post1 = new Post({ message: "go away", user: user1._id });
+    await post1.save();
+    const response = await request(app)
+      .get("/posts")
+      .set("Authorization", `Bearer ${token}`)
+      .send();
+    console.log("Response body:", response.body);
+
+    // Ensure that the response body contains an array of posts
+    console.log(response.body.posts[0].user.fullName);
+
     // Ensure that the first post in the array has the expected fullName
-        expect(response.body.posts[0].user.fullName).toEqual(user1.fullName);
-      })
-  })
+    expect(response.body.posts[0].user.fullName).toEqual(user1.fullName);
+  });
+});
+
+describe("Delete posts", () => {
+  test("should delete the post when a valid postId is provided", async () => {
+    const req = { params: { postId: "validPostId" } };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+    const post = { deleteOne: jest.fn() };
+
+    Post.findById = jest.fn().mockResolvedValue(post);
+
+    await deletePost(req, res);
+
+    expect(Post.findById).toHaveBeenCalledWith("validPostId");
+    expect(post.deleteOne).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Post deleted successfully",
+    });
+  });
+
+  test("should return 400 status code when postId is not provided", async () => {
+    const req = { params: {} };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    await deletePost(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ message: "Post ID not provided" });
+  });
+
+  test("should return 200 status code and success message when deletion is successful", async () => {
+    const req = { params: { postId: "validPostId" } };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+    const post = { deleteOne: jest.fn() };
+
+    Post.findById = jest.fn().mockResolvedValue(post);
+
+    await deletePost(req, res);
+
+    expect(Post.findById).toHaveBeenCalledWith("validPostId");
+    expect(post.deleteOne).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Post deleted successfully",
+    });
+  });
+
+  test("should return 404 status code when post does not exist", async () => {
+    const req = { params: { postId: "nonExistentPostId" } };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    Post.findById = jest.fn().mockResolvedValue(null);
+
+    await deletePost(req, res);
+
+    expect(Post.findById).toHaveBeenCalledWith("nonExistentPostId");
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: "Post not found" });
+  });
 });
